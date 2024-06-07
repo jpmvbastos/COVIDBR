@@ -41,3 +41,30 @@ label var deaths_pc2021 "Total deaths per 100k (2021), OpenDataSUS"
 
 save "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/COVIDBR.dta", replace
 
+
+use "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/COVIDBR.dta", clear
+
+
+drop lss2019 deaths_week132019 cases_week132019 first_death2019 first_1kcases2019 first_10cases_pc2019 first_100cases_pc2019 first_1death_pc2019 first_10death_pc2019 si20202019 si20212019 deaths20202019 deaths20212019 cases20202019 cases20212019 cases_pc20202019 cases_pc20212019 deaths_pc20202019 deaths_pc20212019 si20212020 si20202021 votes_left2019 votes_right2019 votes_null2019 share_votes_right2019 votes_left votes_right2020 votes_null2020 votes_left2021 votes_right2021 votes_null2021 share_votes_right2021 si20202021 deaths20202021 cases20202021 cases_pc20202021 deaths_pc20202021 deaths20212020 cases20212020 cases_pc20212020 deaths_pc20212020 first_restriction2019 first_stringency_index2019 week_first_restriction2019
+ 
+rename share_votes_right2020 share_votes_right
+rename si20212021 si2021
+rename deaths20212021 deaths2021
+rename cases20212021 cases2021 
+rename cases_pc20212021 cases_pc2021 
+rename deaths_pc20212021 deaths_pc2021
+rename si20202020 si2020
+rename deaths20202020 deaths2020
+rename cases20202020 cases2020 
+rename cases_pc20202020 cases_pc2020 
+rename deaths_pc20202020 deaths_pc2020
+
+save "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/COVIDBR_Final.dta", replace
+
+use "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/COVIDBR_Final.dta", clear
+
+merge 1:1 uf using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/extra.dta"
+
+drop _merge
+
+save "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/COVIDBR_Final.dta", replace
