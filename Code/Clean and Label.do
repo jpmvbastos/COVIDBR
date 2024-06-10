@@ -67,4 +67,8 @@ merge 1:1 uf using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/extra.dta"
 
 drop _merge
 
+merge 1:1 uf using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/governors.dta"
+
+drop _merge
+
 save "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/COVIDBR_Final.dta", replace
