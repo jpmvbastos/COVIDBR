@@ -203,7 +203,22 @@ esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table5.tex", re
 
 
 
+* Survey data
+
+use "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/Survey_Brazil_Covid.dta", clear
+
+gen toomuch=0
+replace toomuch = 1 if p75 ==1
+
+gen toolittle = 0 
+replace toolittle = 1 if p75 ==3
 
 
+gen left = 0
+replace left = 1 if p14==1 | p14==2
+
+gen right = 0
+replace right = 1 if p14==4 | p14==5
 
 
+collapse (mean) left right toomuch toolittle, by(p2a)
