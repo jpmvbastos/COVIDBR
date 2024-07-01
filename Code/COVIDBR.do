@@ -63,6 +63,9 @@ sum first_death2020 first_1kcases2020 first_10cases_pc2020 first_100cases_pc2020
 * Health Indicators
 sum hospitalbeds2019 icu2019 doctors2019 health_insurance2019
 
+* Changes in Healthcare
+sum delta_hosp delta_icu delta_doctors
+
 * Political and Economic Variables 
 sum gdp_pc2019 imlee2019 share_votes_right
 
@@ -200,6 +203,24 @@ esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table5.tex", re
 
 
 * Use the first three months of changes in ICU to explain lockdowns in the second semester? 
+
+* Panel Health: 
+
+eststo: reg lss2020_2 delta_icu_marjul delta_hosp_marjul delta_doc_marjul
+
+eststo: reg lss2020_2 delta_icu_marjul delta_hosp_marjul delta_doc_marjul deaths_marjul
+
+eststo: reg si2020 imlee2019 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+* Panel B: First Stringency Index 
+
+eststo: reg first_stringency_index2020 share_votes_right icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+eststo: reg first_stringency_index2020 reelection icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+eststo: reg first_stringency_index2020 imlee2019 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table5.tex", replace star(* 0.10 ** 0.05 *** 0.01) se r2
 
 
 
