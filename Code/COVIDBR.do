@@ -133,7 +133,7 @@ eststo: reg lss2020 imlee2019 icu2019 hospitalbeds2019 doctors2019
 *---Column 6: Full 
 eststo: reg lss2020 imlee2019 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
 
-test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0are 
+test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0
 
 
 esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table3.tex", replace star(* 0.10 ** 0.05 *** 0.01) se r2
@@ -220,14 +220,6 @@ eststo: reg LRFAugDec2020 reelection icu2019 hospitalbeds2019 doctors2019 health
 
 
 esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table6.tex", replace star(* 0.10 ** 0.05 *** 0.01) se r2
-
-
-
-
-
-
-
-
 
 
 
