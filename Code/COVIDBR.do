@@ -41,6 +41,13 @@ gen delta_lss = lss2021 / lss2020
  
  gen delta_lss = lss2021 / lss2020
  
+ * Transfers
+ 
+ gen transf = health_transf + free_transf
+ 
+ gen transf_pc = (transf *1000000)/ population2019 
+ 
+ gen share_free = free_transf / transf
  
  
  * Random vars to test whether loss of significance is due to degrees of freedom
@@ -220,6 +227,60 @@ eststo: reg LRFAugDec2020 reelection icu2019 hospitalbeds2019 doctors2019 health
 
 
 esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table6.tex", replace star(* 0.10 ** 0.05 *** 0.01) se r2
+
+
+
+*** Party and Opposition
+
+* Panel A: Votes to Right
+
+*---Column 1: Simple
+eststo: reg lss2020 share_votes_right icu2019 hospitalbeds2019 doctors2019
+
+
+*---Column 2: 
+eststo: reg lss2020 share_votes_right icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0
+
+* Panel B: Reelection
+
+*---Column 3: Simple
+eststo: reg lss2020 reelection icu2019 hospitalbeds2019 doctors2019
+
+*---Column 4: 
+eststo: reg lss2020 reelection icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+
+test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0
+
+
+* Panel C: IMLEE 
+
+*---Column 5: Simple
+eststo: reg lss2020 imlee2019 icu2019 hospitalbeds2019 doctors2019
+
+*---Column 6: Full 
+eststo: reg lss2020 imlee2019 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0
+
+
+** Governor Party
+
+reg lss2020 opposition icu2019 hospitalbeds2019 doctors2019 
+
+reg lss2020 opposition reelection hospitalbeds2019 doctors2019
+
+reg lss2020 opposition icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+reg lss2020 opposition reelection icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020 
+
+
+esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table7.tex", replace star(* 0.10 ** 0.05 *** 0.01) se r2
+
+
+
 
 
 

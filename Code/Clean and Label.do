@@ -88,3 +88,30 @@ drop _merge
 merge 1:1 uf using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/first_semester_cases.dta"
 
 save "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/COVIDBR_Final.dta", replace
+
+
+* google trends data
+
+import excel "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/google-trends.xlsx", firstrow sheet("Sheet1") clear
+
+save "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/google-trends.dta", replace
+
+* federal transfers data
+
+import excel "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/federal-transfers.xlsx", firstrow sheet("Sheet1") clear
+
+drop if _n>27
+
+save "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/federal-transfers.dta", replace
+
+
+
+* merge
+
+use "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/COVIDBR_Final.dta", clear
+
+merge 1:1 uf using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/google-trends.dta"
+
+drop _merge
+
+merge 1:1 uf using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/federal-transfers.dta"
