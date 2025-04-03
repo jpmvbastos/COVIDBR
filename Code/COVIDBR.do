@@ -91,8 +91,7 @@ eststo: reg lss2020 icu2019 hospitalbeds2019 doctors2019
 eststo: reg lss2020 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019
 
 *---Column 3: 
-eststo: 
-reg lss2020 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp  first_death2020 population2019
+eststo: reg lss2020 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020 
 
 test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0
 	
@@ -281,25 +280,76 @@ esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table7.tex", re
 
 
 
+** Jackknife
+
+*** Table 2: Healthcare Indicators 
+
+eststo clear 
+
+*---Column 1: 
+eststo: jackknife: reg lss2020 icu2019 hospitalbeds2019 doctors2019
+
+*---Column 2: 
+eststo: jackknife: reg lss2020 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019
+
+*---Column 3: 
+eststo: jackknife: reg lss2020 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020 
+
+*test first_death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0
+	
+*---Column 4: Changes
+eststo: jackknife: reg lss2020 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020 delta_icu delta_hosp delta_doctors
+
+*test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 =  delta_icu = delta_hosp = temp = delta_doctors = 0
+
+
+esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table2-JK.tex", replace star(* 0.10 ** 0.05 *** 0.01) se r2
+
+
+* Table 3:  
+
+eststo clear 
+
+* Panel A: Votes to Right
+
+*---Column 1: Simple
+eststo: jackknife: reg lss2020 share_votes_right  icu2019 hospitalbeds2019 doctors2019
+
+
+*---Column 2: 
+eststo: jackknife: reg lss2020 share_votes_right icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+*test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0
+
+* Panel B: Reelection
+
+*---Column 3: Simple
+eststo: jackknife: reg lss2020 reelection icu2019 hospitalbeds2019 doctors2019
+
+*---Column 4: 
+eststo: jackknife: reg lss2020 reelection icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+
+*test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0
+
+
+* Panel C: IMLEE 
+
+*---Column 5: Simple
+eststo: jackknife: reg lss2020 imlee2019 icu2019 hospitalbeds2019 doctors2019
+
+*---Column 6: Full 
+eststo: jackknife: reg lss2020 imlee2019 icu2019 hospitalbeds2019 doctors2019 health_insurance2019 population652019 temp gdp_pc2019 first_1death_pc2020
+
+*test first_1death_pc2020 = icu2019 = doctors2019 = population652019 = hospitalbeds2019 = health_insurance2019 = 0
+
+
+esttab using "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Results/Table3-JK.tex", replace star(* 0.10 ** 0.05 *** 0.01) se r2
+
+
+ttest lss2020, by(reelection)
 
 
 
-* Survey data
 
-use "/Users/jpmvbastos/Documents/GitHub/COVIDBR/Data/Survey_Brazil_Covid.dta", clear
-
-gen toomuch=0
-replace toomuch = 1 if p75 ==1
-
-gen toolittle = 0 
-replace toolittle = 1 if p75 ==3
-
-
-gen left = 0
-replace left = 1 if p14==1 | p14==2
-
-gen right = 0
-replace right = 1 if p14==4 | p14==5
-
-
-collapse (mean) left right toomuch toolittle, by(p2a)
+twoway (scatter lss2020 share_votes_right, mlabel(uf)) (lfit lss2020 share_votes_right)
